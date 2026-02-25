@@ -1,0 +1,19 @@
+{
+  "manifest_version": 3,
+  "name": "Block YouTube Shorts Shelves",
+  "version": "1.0.0",
+  "description": "Hides Shorts shelves on YouTube.",
+  "permissions": ["storage"],
+  "host_permissions": ["https://www.youtube.com/*"],
+  "action": {
+    "default_popup": "popup.html",
+    "default_title": "Shorts Shelf Blocker"
+  },
+  "content_scripts": [
+    {
+      "matches": ["https://www.youtube.com/*"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ]
+}
