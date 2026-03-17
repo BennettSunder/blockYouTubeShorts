@@ -1,3 +1,5 @@
+const api = globalThis.browser ?? globalThis.chrome;
+
 const STYLE_ID = "block-youtube-shorts-style";
 const DEFAULT_ENABLED = true;
 
@@ -38,7 +40,7 @@ function apply(enabled) {
 }
 
 // Listen for popup toggle
-chrome.runtime.onMessage.addListener((msg) => {
+api.runtime.onMessage.addListener((msg) => {
     if (msg?.type === "SET_ENABLED") {
         apply(msg.enabled);
     }
@@ -46,12 +48,12 @@ chrome.runtime.onMessage.addListener((msg) => {
 
 // Handle YouTube SPA navigation
 window.addEventListener("yt-navigate-finish", async () => {
-    const { enabled = DEFAULT_ENABLED } = await chrome.storage.sync.get("enabled");
+    const { enabled = DEFAULT_ENABLED } = await api.storage.sync.get("enabled");
     apply(enabled);
 });
 
 // Initial load
 (async function init() {
-    const { enabled = DEFAULT_ENABLED } = await chrome.storage.sync.get("enabled");
+    const { enabled = DEFAULT_ENABLED } = await api.storage.sync.get("enabled");
     apply(enabled);
 })();
